@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:starwars_app/src/style/star_wars_app_theme.dart';
+import 'package:starwars_app/src/ui/star_wars_app_theme.dart';
 import 'package:rxdart/rxdart.dart';
 
 class ThemeProvider {

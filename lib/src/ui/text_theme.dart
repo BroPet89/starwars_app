@@ -38,7 +38,7 @@ class TextStyles {
   static TextStyle get sidebarItem => TextStyle(fontFamily: FontFamilies.roboto, fontSize: FontSizes.sidebarItem, fontWeight: FontWeight.w600);
   static TextStyle get pageTitle => TextStyle(fontFamily: FontFamilies.roboto, fontSize: FontSizes.pageTitle);
   static TextStyle get tableHeader => TextStyle(fontFamily: FontFamilies.roboto, fontSize: FontSizes.tableHeader, fontWeight: FontWeight.bold);
-  static TextStyle get formFieldAddon => TextStyle(fontWeight: FontWeight.w400);
+  static TextStyle get formFieldAddon => const TextStyle(fontWeight: FontWeight.w400);
   static TextStyle get largeMessage => TextStyle(fontWeight: FontWeight.w500, fontSize: FontSizes.largeMessage);
   static TextStyle get jobStatsCard => TextStyle(fontSize: FontSizes.jobStatsCard);
   static TextStyle get jobStatsCardNumber => TextStyle(fontSize: FontSizes.jobStatsCardNumber);
