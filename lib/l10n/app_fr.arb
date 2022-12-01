@@ -1,0 +1,12 @@
+{
+    "@@locale": "fr",
+
+    "appName" : "Star Wars app",
+
+    "yes": "Oui",
+    "no": "Non",
+    "important": "Important",
+    "skip": "Passer",
+    "areYouSureYouWishToSignOut" : "Voulez-vous vraiment vous déconnecter?",
+    "unableToSignOut" : "Impossible de se déconnecter"
+}
