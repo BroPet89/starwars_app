@@ -1,6 +1,6 @@
 import 'package:flex_color_scheme/flex_color_scheme.dart';
 import 'package:flutter/material.dart';
-import 'package:starwars_app/src/style/text_theme.dart';
+import 'package:starwars_app/src/ui/text_theme.dart';
 import 'package:starwars_app/src/utils/constants.dart';
 import 'package:starwars_app/src/utils/extensions/custom_colors.dart';
 

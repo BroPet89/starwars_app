@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart' show FirebaseAuth;
-import 'package:starwars_app/src/providers/firebase_collections.dart';
+import 'package:starwars_app/src/data/firebase_collections.dart';
 import 'package:starwars_app/src/domain/models/user.dart';
 
 abstract class UserProvider {

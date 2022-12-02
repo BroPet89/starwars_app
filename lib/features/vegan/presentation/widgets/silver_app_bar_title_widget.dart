@@ -9,12 +9,12 @@ class SliverAppbarTitle extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  _SliverAppbarTitleState createState() {
-    return _SliverAppbarTitleState();
+  SliverAppbarTitleState createState() {
+    return SliverAppbarTitleState();
   }
 }
 
-class _SliverAppbarTitleState extends State<SliverAppbarTitle> {
+class SliverAppbarTitleState extends State<SliverAppbarTitle> {
   ScrollPosition? _position;
   bool _visible = false;
 

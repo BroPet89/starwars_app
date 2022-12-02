@@ -1,3 +1,5 @@
+// ignore_for_file: no_leading_underscores_for_local_identifiers
+
 import 'package:dartz/dartz.dart';
 import 'package:starwars_app/src/domain/data_source_exception.dart';
 import 'package:starwars_app/src/domain/models/auth/auth_exception.dart';
@@ -12,7 +14,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 
-
+@GenerateNiceMocks([MockSpec<AuthRepository>()])
 import 'auth_repository_tests.mocks.dart';
 
 

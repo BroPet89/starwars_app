@@ -14,7 +14,7 @@ import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 import 'package:state_notifier_test/state_notifier_test.dart';
 
-
+@GenerateNiceMocks([MockSpec<AuthNotifier>()])
 import 'auth_notifier_test.mocks.dart';
 
 

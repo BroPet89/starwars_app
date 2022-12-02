@@ -19,7 +19,7 @@ class Observers extends ProviderObserver {
   }
 
   @override
-  void didDisposeProvider(ProviderBase provider, ProviderContainer containers) {
+  void didDisposeProvider(ProviderBase provider, ProviderContainer container) {
     if (kDebugMode) {
       print('''
 {
@@ -27,6 +27,6 @@ class Observers extends ProviderObserver {
   "newValue": "disposed"
 }''');
     }
-    super.didDisposeProvider(provider, containers);
+    super.didDisposeProvider(provider, container);
   }
 }

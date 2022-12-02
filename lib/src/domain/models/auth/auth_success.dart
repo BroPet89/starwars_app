@@ -4,7 +4,7 @@ import 'package:starwars_app/src/domain/models/user.dart';
 part 'auth_success.freezed.dart';
 
 @freezed
-abstract class AuthSuccess with _$AuthSuccess {
+class AuthSuccess with _$AuthSuccess {
   const factory AuthSuccess({
     required bool registrationComplete,
     required User user,
