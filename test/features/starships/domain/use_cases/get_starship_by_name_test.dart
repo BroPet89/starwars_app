@@ -23,14 +23,14 @@ void main() {
   const tString = "death%20star";
   const tStarship = Starship(name: "Death Star", crew: "342,953");
 
-  group("get starship tests", () {
+  group("Get starship tests", () {
     test("should get starship by name from the repository", () async {
       // arrange
       when(mockStarshipRepository.getStarshipByName(tString))
           .thenAnswer((_) async => const Right(tStarship));
 
       // act
-      final result = await usecase.execute(searchTerm: tString);
+      final result = await usecase(const Params(searchTerm: tString));
       // assert
       expect(result, const Right(tStarship));
       verify(mockStarshipRepository.getStarshipByName(tString));
