@@ -55,16 +55,19 @@ void main() {
 
   group("cacheStarship", () {
     const tStarshipModel = StarshipModel(name: "Death Star", crew: "342,953");
-    // test(
-    //   'should call SharedPreferences to cache the data',
-    //   () async {
-    //     // act
-    //     dataSource.cacheStarship(tStarshipModel);
-    //     // assert
-    //     final expectedJsonString = json.encode(tStarshipModel.toJson());
-    //     verify(
-    //         mockSharedPreferences.setString(CACHED_STARSHIP, expectedJsonString));
-    //   },
-    // );
+    test(
+      'should call SharedPreferences to cache the data',
+      () async {
+        //arrange 
+        when(mockSharedPreferences.setString(any, any))
+          .thenAnswer((_) async => true);
+        // act
+        dataSource.cacheStarship(tStarshipModel);
+        // assert
+        final expectedJsonString = json.encode(tStarshipModel.toJson());
+        verify(
+            mockSharedPreferences.setString(CACHED_STARSHIP, expectedJsonString));
+      },
+    );
   });
 }

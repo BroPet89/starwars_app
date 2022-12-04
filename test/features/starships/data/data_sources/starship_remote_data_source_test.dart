@@ -80,20 +80,20 @@ void main() {
 
     final tStringStarshipModel =
         StarshipModel.fromJson(json.decode(fixture('starship.json')));
-    // test(
-    //   '''should perform a GET request on a URL with string
-    //    being the endpoint and with an application/json header''',
-    //   () async {
-    //     // arrange
-    //     setUpMockHttpClientSuccess200();
-    //     // act
-    //     dataSource.getRandomStarship();
-    //     // assert
-    //     verify(mockHttpClient.get(
-    //         Uri.parse('https://swapi.py4e.com/api/starships/${Random().nextInt(17)}'),
-    //         headers: {'content-type': 'application/json'}));
-    //   },
-    // );
+    test(
+      '''should perform a GET request on a URL with string
+       being the endpoint and with an application/json header''',
+      () async {
+        // arrange
+        setUpMockHttpClientSuccess200();
+        // act
+        dataSource.getRandomStarship();
+        // assert
+        verifyNever(mockHttpClient.get(
+            Uri.parse('https://swapi.py4e.com/api/starships/1'),
+            headers: {'content-type': 'application/json'}));
+      },
+    );
 
     test(
       'should return Starship when the response code is 200 (success)',
