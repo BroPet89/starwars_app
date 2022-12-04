@@ -100,5 +100,35 @@ void main() {
     setUp(() {
       when(mockNetworkInfo.isConnected).thenAnswer((_) async => false);
     });
+
+    test(
+      'should return last locally cached starship when the cache data is present',
+      () async {
+        // arrange
+        when(mockLocalDataSource.getLastStarshipModel())
+            .thenAnswer((_) async => tStarshipModel);
+        // act
+        final result = await repository.getStarshipByName(tString);
+        // assert
+        verifyZeroInteractions(mockRemoteDataSource);
+        verify(mockLocalDataSource.getLastStarshipModel());
+        expect(result, equals(const Right(tStarship)));
+      },
+    );
+
+    test(
+      'should return CacheFailure when there is no cached data present',
+      () async {
+        // arrange
+        when(mockLocalDataSource.getLastStarshipModel())
+            .thenThrow(CacheException());
+        // act
+        final result = await repository.getStarshipByName(tString);
+        // assert
+        verifyZeroInteractions(mockRemoteDataSource);
+        verify(mockLocalDataSource.getLastStarshipModel());
+        expect(result, equals(Left(CacheFailure())));
+      },
+    );
   });
 }

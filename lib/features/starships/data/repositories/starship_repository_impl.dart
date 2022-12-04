@@ -20,20 +20,28 @@ class StarshipRepositoryImpl implements StarshipRepository {
       required this.networkInfo});
 
   @override
-  Future<Either<Failure, Starship>> getRandomStarship() {
-    // TODO: implement getRandomStarship
-    throw UnimplementedError();
+  Future<Either<Failure, Starship>> getStarshipByName(String name) async {
+    if (await networkInfo.isConnected) {
+      try {
+        final remoteStarship =
+            await starshipRemoteDataSource.getStarshipByName(name);
+        starshipLocalDataSource.cacheStarship(remoteStarship);
+        return Right(remoteStarship);
+      } on ServerException {
+        return Left(ServerFailure());
+      }
+    } else {
+      try {
+        final localStarship = await starshipLocalDataSource.getLastStarshipModel();
+        return Right(localStarship);
+      } on CacheException {
+        return Left(CacheFailure());
+      }
+    }
   }
 
   @override
-  Future<Either<Failure, Starship>> getStarshipByName(String name) async {
-    networkInfo.isConnected;
-    try {
-      final remoteStarship = await starshipRemoteDataSource.getStarshipByName(name);
-      starshipLocalDataSource.cacheStarship(remoteStarship);
-      return Right(remoteStarship);
-    } on ServerException {
-      return Left(ServerFailure());
-    }
+  Future<Either<Failure, Starship>> getRandomStarship() {
+    throw UnimplementedError();
   }
 }
