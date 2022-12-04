@@ -6,15 +6,13 @@
 import 'dart:async' as _i4;
 
 import 'package:mockito/mockito.dart' as _i1;
-import 'package:starwars_app/common/network/network_info.dart' as _i7;
+import 'package:starwars_app/common/network/network_info.dart' as _i6;
 import 'package:starwars_app/features/starships/data/data_sources/starship_local_data_source.dart'
     as _i5;
 import 'package:starwars_app/features/starships/data/data_sources/starship_remote_data_source.dart'
     as _i3;
 import 'package:starwars_app/features/starships/data/models/starship_model.dart'
     as _i2;
-import 'package:starwars_app/features/starships/domain/entities/starship.dart'
-    as _i6;
 
 // ignore_for_file: type=lint
 // ignore_for_file: avoid_redundant_argument_values
@@ -101,7 +99,7 @@ class MockStarshipLocalDataSource extends _i1.Mock
         )),
       ) as _i4.Future<_i2.StarshipModel>);
   @override
-  _i4.Future<void> cacheStarship(_i6.Starship? starshipToCache) =>
+  _i4.Future<void> cacheStarship(_i2.StarshipModel? starshipToCache) =>
       (super.noSuchMethod(
         Invocation.method(
           #cacheStarship,
@@ -115,7 +113,7 @@ class MockStarshipLocalDataSource extends _i1.Mock
 /// A class which mocks [NetworkInfo].
 ///
 /// See the documentation for Mockito's code generation for more information.
-class MockNetworkInfo extends _i1.Mock implements _i7.NetworkInfo {
+class MockNetworkInfo extends _i1.Mock implements _i6.NetworkInfo {
   MockNetworkInfo() {
     _i1.throwOnMissingStub(this);
   }

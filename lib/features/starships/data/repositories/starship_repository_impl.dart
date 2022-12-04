@@ -1,4 +1,5 @@
 import 'package:dartz/dartz.dart';
+import '../models/starship_model.dart';
 
 import '../../../../common/error/exceptions.dart';
 import '../../../../common/error/failures.dart';
@@ -8,7 +9,7 @@ import '../../domain/repositories/starship_repository.dart';
 import '../data_sources/starship_local_data_source.dart';
 import '../data_sources/starship_remote_data_source.dart';
 
-typedef _ConcreteOrRandomPicker = Future<Starship> Function();
+typedef _ConcreteOrRandomPicker = Future<StarshipModel> Function();
 
 class StarshipRepositoryImpl implements StarshipRepository {
   final StarshipRemoteDataSource starshipRemoteDataSource;
