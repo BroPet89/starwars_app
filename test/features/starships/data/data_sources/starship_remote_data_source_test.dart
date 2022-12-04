@@ -90,7 +90,7 @@ void main() {
         dataSource.getRandomStarship();
         // assert
         verifyNever(mockHttpClient.get(
-            Uri.parse('https://swapi.py4e.com/api/starships/1'),
+            Uri.parse('https://swapi.py4e.com/api/starships/2'),
             headers: {'content-type': 'application/json'}));
       },
     );

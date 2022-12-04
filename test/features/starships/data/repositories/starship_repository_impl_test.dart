@@ -50,8 +50,7 @@ void main() {
 
   const tString = "Death Star";
   const tStarshipModel = StarshipModel(name: tString, crew: "342,953");
-
-  const tStarship = tStarshipModel;
+  const Starship tStarship = tStarshipModel;
 
   group("Get starship by name", () {
     // test(
@@ -151,11 +150,13 @@ void main() {
     //   'should check if the device is online',
     //   () async {
     //     // arrange
-    //     when(mockNetworkInfo.isConnected).thenAnswer((_) async => true);
+    //     when(mockNetworkInfo.isConnected)
+    //         .thenAnswer((_) async => Future.value(true));
     //     // act
-    //     await repository.getRandomStarship();
+    //     final result = await repository.getRandomStarship();
     //     // assert
     //     verify(mockNetworkInfo.isConnected);
+    //     expect(result, const Left(ServerFailure));
     //   },
     // );
 
