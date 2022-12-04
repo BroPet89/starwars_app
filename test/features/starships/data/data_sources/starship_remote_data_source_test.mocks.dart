@@ -84,20 +84,6 @@ class MockStarshipRemoteDataSourceImpl extends _i1.Mock
         ),
       ) as _i2.Client);
   @override
-  _i5.Future<_i3.StarshipModel> getRandomStarship() => (super.noSuchMethod(
-        Invocation.method(
-          #getRandomStarship,
-          [],
-        ),
-        returnValue: _i5.Future<_i3.StarshipModel>.value(_FakeStarshipModel_1(
-          this,
-          Invocation.method(
-            #getRandomStarship,
-            [],
-          ),
-        )),
-      ) as _i5.Future<_i3.StarshipModel>);
-  @override
   _i5.Future<_i3.StarshipModel> getStarshipByName(String? name) =>
       (super.noSuchMethod(
         Invocation.method(
@@ -109,6 +95,20 @@ class MockStarshipRemoteDataSourceImpl extends _i1.Mock
           Invocation.method(
             #getStarshipByName,
             [name],
+          ),
+        )),
+      ) as _i5.Future<_i3.StarshipModel>);
+  @override
+  _i5.Future<_i3.StarshipModel> getRandomStarship() => (super.noSuchMethod(
+        Invocation.method(
+          #getRandomStarship,
+          [],
+        ),
+        returnValue: _i5.Future<_i3.StarshipModel>.value(_FakeStarshipModel_1(
+          this,
+          Invocation.method(
+            #getRandomStarship,
+            [],
           ),
         )),
       ) as _i5.Future<_i3.StarshipModel>);

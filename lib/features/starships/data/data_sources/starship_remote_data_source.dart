@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:math';
 
 import 'package:http/http.dart' as http;
 import '../models/starship_model.dart';
@@ -22,9 +23,16 @@ class StarshipRemoteDataSourceImpl implements StarshipRemoteDataSource {
   StarshipRemoteDataSourceImpl({required this.client});
 
   @override
-  Future<StarshipModel> getStarshipByName(String name) async {
+  Future<StarshipModel> getStarshipByName(String name) =>
+      _getStarshipFromURL("https://swapi.py4e.com/api/starships/?search=$name");
+
+  @override
+  Future<StarshipModel> getRandomStarship() => _getStarshipFromURL(
+      "https://swapi.py4e.com/api/starships/${Random().nextInt(17)}");
+
+  Future<StarshipModel> _getStarshipFromURL(String url) async {
     final response = await client.get(
-      Uri.parse("https://swapi.py4e.com/api/starships/?search=$name"),
+      Uri.parse(url),
       headers: {
         'content-type': 'application/json',
       },
@@ -34,11 +42,5 @@ class StarshipRemoteDataSourceImpl implements StarshipRemoteDataSource {
     } else {
       throw ServerException();
     }
-  }
-
-  @override
-  Future<StarshipModel> getRandomStarship() {
-    // TODO: implement getRandomStarship
-    throw UnimplementedError();
   }
 }

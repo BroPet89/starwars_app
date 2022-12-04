@@ -1,6 +1,6 @@
 import '../../domain/entities/starship.dart';
 
-class StarshipModel extends Starship {
+class StarshipModel extends Starship  {
   const StarshipModel({required String name, required String crew})
       : super(name: name, crew: crew);
 

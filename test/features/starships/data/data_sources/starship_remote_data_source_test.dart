@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:math';
 
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/annotations.dart';
@@ -71,6 +72,50 @@ void main() {
         final call = dataSource.getStarshipByName;
         // assert
         expect(() => call(tString), throwsA(isA<ServerException>()));
+      },
+    );
+  });
+
+    group("getRandomStarship", () {
+
+    final tStringStarshipModel =
+        StarshipModel.fromJson(json.decode(fixture('starship.json')));
+    // test(
+    //   '''should perform a GET request on a URL with string
+    //    being the endpoint and with an application/json header''',
+    //   () async {
+    //     // arrange
+    //     setUpMockHttpClientSuccess200();
+    //     // act
+    //     dataSource.getRandomStarship();
+    //     // assert
+    //     verify(mockHttpClient.get(
+    //         Uri.parse('https://swapi.py4e.com/api/starships/${Random().nextInt(17)}'),
+    //         headers: {'content-type': 'application/json'}));
+    //   },
+    // );
+
+    test(
+      'should return Starship when the response code is 200 (success)',
+      () async {
+        // arrange
+        setUpMockHttpClientSuccess200();
+        // act
+        final result = await dataSource.getRandomStarship();
+        // assert
+        expect(result, equals(tStringStarshipModel));
+      },
+    );
+
+    test(
+      'should throw a ServerException when the response code is not 200',
+      () async {
+        // arrange
+        setUpMockHttpClientFailure404();
+        // act
+        final call = dataSource.getRandomStarship;
+        // assert
+        expect(() => call(), throwsA(isA<ServerException>()));
       },
     );
   });
