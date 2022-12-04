@@ -1,4 +1,5 @@
 import 'package:dartz/dartz.dart';
+
 import '../../../../common/error/failures.dart';
 import '../entities/starship.dart';
 

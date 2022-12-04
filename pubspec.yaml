@@ -28,6 +28,8 @@ dependencies:
   #Local cache
   shared_preferences: ^2.0.15
   build_runner: ^2.3.2
+  json_serializable: ^6.5.4
+  freezed: ^2.3.0
 
 dev_dependencies:
   flutter_test:
