@@ -52,7 +52,7 @@ void main() {
   const tStarshipModel = StarshipModel(name: tString, crew: "342,953");
   const Starship tStarship = tStarshipModel;
 
-  group("Get starship by name", () {
+  group("getStarshipByName", () {
     // test(
     //   'should check if the device is online',
     //   () async {
@@ -143,7 +143,7 @@ void main() {
     });
   });
 
-  group("Get random starship", () {
+  group("getRandomStarship", () {
     const tStarshipModel = StarshipModel(name: "CR90 corvette", crew: "30");
     const Starship tStarship = tStarshipModel;
     // test(
@@ -151,12 +151,11 @@ void main() {
     //   () async {
     //     // arrange
     //     when(mockNetworkInfo.isConnected)
-    //         .thenAnswer((_) async => Future.value(true));
+    //         .thenAnswer((_) async => true);
     //     // act
-    //     final result = await repository.getRandomStarship();
+    //     repository.getRandomStarship();
     //     // assert
     //     verify(mockNetworkInfo.isConnected);
-    //     expect(result, const Left(ServerFailure));
     //   },
     // );
 
@@ -237,4 +236,103 @@ void main() {
       );
     });
   });
+
+  group("getListStarship", () {
+    const tStarshipModels = [
+      StarshipModel(name: "CR90 corvette", crew: "30"),
+      StarshipModel(name: "CR90 corvette", crew: "30"),
+      StarshipModel(name: "CR90 corvette", crew: "30")
+    ];
+    const Starship tStarship = tStarshipModel;
+    test(
+      'should check if the device is online',
+      () async {
+        // arrange
+        when(mockNetworkInfo.isConnected)
+            .thenAnswer((_) async => true);
+        // act
+        repository.getListStarships();
+        // assert
+        verify(mockNetworkInfo.isConnected);
+      },
+    );
+
+    runTestsOnline(() {
+      test(
+        'should return remote data when the call to remote data source is successful',
+        () async {
+          // arrange
+          when(mockRemoteDataSource.getRandomStarship())
+              .thenAnswer((_) async => tStarshipModel);
+          // act
+          final result = await repository.getRandomStarship();
+          // assert
+          verify(mockRemoteDataSource.getRandomStarship());
+          expect(result, equals(const Right(tStarship)));
+        },
+      );
+
+      test(
+        'should cache the data locally when the call to remote data source is successful',
+        () async {
+          // arrange
+          when(mockRemoteDataSource.getRandomStarship())
+              .thenAnswer((_) async => tStarshipModel);
+          // act
+          await repository.getRandomStarship();
+          // assert
+          verify(mockRemoteDataSource.getRandomStarship());
+          verify(mockLocalDataSource.cacheStarship(tStarshipModel));
+        },
+      );
+
+      test(
+        'should return server failure when the call to remote data source is unsuccessful',
+        () async {
+          // arrange
+          when(mockRemoteDataSource.getRandomStarship())
+              .thenThrow(ServerException());
+          // act
+          final result = await repository.getRandomStarship();
+          // assert
+          verify(mockRemoteDataSource.getRandomStarship());
+          verifyZeroInteractions(mockLocalDataSource);
+          expect(result, equals(Left(ServerFailure())));
+        },
+      );
+    });
+
+    runTestsOffline(() {
+      test(
+        'should return last locally cached starship when the cache data is present',
+        () async {
+          // arrange
+          when(mockLocalDataSource.getLastStarshipModel())
+              .thenAnswer((_) async => tStarshipModel);
+          // act
+          final result = await repository.getRandomStarship();
+          // assert
+          verifyZeroInteractions(mockRemoteDataSource);
+          verify(mockLocalDataSource.getLastStarshipModel());
+          expect(result, equals(const Right(tStarship)));
+        },
+      );
+
+      test(
+        'should return CacheFailure when there is no cached data present',
+        () async {
+          // arrange
+          when(mockLocalDataSource.getLastStarshipModel())
+              .thenThrow(CacheException());
+          // act
+          final result = await repository.getRandomStarship();
+          // assert
+          verifyZeroInteractions(mockRemoteDataSource);
+          verify(mockLocalDataSource.getLastStarshipModel());
+          expect(result, equals(Left(CacheFailure())));
+        },
+      );
+    });
+  });
+
 }

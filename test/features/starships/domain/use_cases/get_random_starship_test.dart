@@ -23,7 +23,7 @@ void main() {
 
   const tStarship = Starship(name: "Death Star", crew: "342,953");
 
-  group("Get starship tests", () {
+  group("getRandomStarship", () {
     test("should get a random starship from the repository", () async {
       // arrange
       when(mockStarshipRepository.getRandomStarship())

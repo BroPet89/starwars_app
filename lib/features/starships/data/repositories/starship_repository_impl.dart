@@ -56,4 +56,9 @@ class StarshipRepositoryImpl implements StarshipRepository {
       }
     }
   }
+
+  @override
+  Future<Either<Failure, List<Starship>>> getListStarships() async {
+     return Left(CacheFailure());
+  }
 }

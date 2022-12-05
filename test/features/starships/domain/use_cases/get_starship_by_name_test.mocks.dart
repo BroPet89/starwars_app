@@ -76,4 +76,21 @@ class MockStarshipRepository extends _i1.Mock
           ),
         )),
       ) as _i4.Future<_i2.Either<_i5.Failure, _i6.Starship>>);
+  @override
+  _i4.Future<_i2.Either<_i5.Failure, List<_i6.Starship>>> getListStarships() =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #getListStarships,
+          [],
+        ),
+        returnValue:
+            _i4.Future<_i2.Either<_i5.Failure, List<_i6.Starship>>>.value(
+                _FakeEither_0<_i5.Failure, List<_i6.Starship>>(
+          this,
+          Invocation.method(
+            #getListStarships,
+            [],
+          ),
+        )),
+      ) as _i4.Future<_i2.Either<_i5.Failure, List<_i6.Starship>>>);
 }

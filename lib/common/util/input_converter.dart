@@ -1,5 +1,6 @@
 import 'package:dartz/dartz.dart';
-import 'package:starwars_app/common/error/failures.dart';
+
+import '../error/failures.dart';
 
 class InputConverter {
   Either<Failure, int> stringToUnsignedInt(String str) {

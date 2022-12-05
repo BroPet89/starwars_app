@@ -2,8 +2,9 @@ import 'dart:convert';
 import 'dart:math';
 
 import 'package:http/http.dart' as http;
-import '../models/starship_model.dart';
+
 import '/common/error/exceptions.dart';
+import '../models/starship_model.dart';
 
 abstract class StarshipRemoteDataSource {
   /// calls the "https://swapi.py4e.com/api/starships/?search={name}" endpoint.
