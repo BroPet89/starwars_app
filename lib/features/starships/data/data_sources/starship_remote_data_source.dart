@@ -51,7 +51,6 @@ class StarshipRemoteDataSourceImpl implements StarshipRemoteDataSource {
 
   @override
   Future<List<StarshipModel>> getListStarship() async {
-    List<StarshipModel> starships = [];
     final response = await client.get(
       Uri.parse("https://swapi.py4e.com/api/starships"),
       headers: {
@@ -60,9 +59,8 @@ class StarshipRemoteDataSourceImpl implements StarshipRemoteDataSource {
     );
     if (response.statusCode == 200) {
       final returnedJson = json.decode(response.body);
-      for (Map<String, dynamic> c in returnedJson["results"]) {
-        starships.add(StarshipModel.fromJson(c));
-      }
+      List<StarshipModel> starships = List<StarshipModel>.from(
+          returnedJson["results"].map((model) => StarshipModel.fromJson(model)));
       return starships;
     } else {
       throw ServerException();

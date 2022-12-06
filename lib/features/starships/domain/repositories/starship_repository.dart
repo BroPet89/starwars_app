@@ -6,5 +6,5 @@ import '../entities/starship.dart';
 abstract class StarshipRepository {
   Future<Either<Failure, Starship>> getStarshipByName(String name);
   Future<Either<Failure, Starship>> getRandomStarship();
-  Future<Either<Failure, List<Starship>>> getListStarships();
+  Future<Either<Failure, List<Starship>>> getListStarship();
 }

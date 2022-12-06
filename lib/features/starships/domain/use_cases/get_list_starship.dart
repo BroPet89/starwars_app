@@ -12,6 +12,6 @@ class GetListStarship implements Usecase<List<Starship>, NoParams> {
 
   @override
   Future<Either<Failure, List<Starship>>> call(NoParams params) async {
-   return await repository.getListStarships();
+   return await repository.getListStarship();
   }
 }

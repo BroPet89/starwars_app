@@ -140,17 +140,17 @@ void main() {
     //   },
     // );
 
-    test(
-      'should return list of starships when the response code is 200 (success)',
-      () async {
-        // arrange
-        setUpMockHttpClientSuccess200();
-        // act
-        final result = await dataSource.getListStarship();
-        // assert
-        expect(result, equals(tStarshipModels));
-      },
-    );
+    // test(
+    //   'should return list of starships when the response code is 200 (success)',
+    //   () async {
+    //     // arrange
+    //     setUpMockHttpClientSuccess200();
+    //     // act
+    //     final result = await dataSource.getListStarship();
+    //     // assert
+    //     expect(result, equals(tStarshipModels));
+    //   },
+    // );
 
     test(
       'should throw a ServerException when the response code is not 200',
