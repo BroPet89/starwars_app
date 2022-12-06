@@ -58,10 +58,11 @@ class StarshipRemoteDataSourceImpl implements StarshipRemoteDataSource {
       },
     );
     if (response.statusCode == 200) {
-      final returnedJson = json.decode(response.body);
-      List<StarshipModel> starships = List<StarshipModel>.from(
-          returnedJson["results"].map((model) => StarshipModel.fromJson(model)));
-      return starships;
+      // final returnedJson = json.decode(response.body);
+      // List<StarshipModel> starships = List<StarshipModel>.from(
+      //     returnedJson["results"].map((model) => StarshipModel.fromJson(model)));
+      //return starships;
+     return List<StarshipModel>.from(json.decode(response.body)["results"]).toList();
     } else {
       throw ServerException();
     }
