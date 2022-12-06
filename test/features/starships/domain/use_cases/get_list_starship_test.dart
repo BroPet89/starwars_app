@@ -28,13 +28,13 @@ void main() {
     'should get a list of starships from the repository',
     () async {
       // arrange
-      when(mockStarshipRepository.getListStarships())
+      when(mockStarshipRepository.getListStarship())
           .thenAnswer((_) async => const Right(tStarships));
       // act
       final result = await usecase(NoParams());
       // assert
       expect(result, const Right(tStarships));
-      verify(mockStarshipRepository.getListStarships());
+      verify(mockStarshipRepository.getListStarship());
       verifyNoMoreInteractions(mockStarshipRepository);
     },
   );
