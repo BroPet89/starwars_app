@@ -76,24 +76,23 @@ void main() {
     );
   });
 
-    group("getRandomStarship", () {
-
+  group("getRandomStarship", () {
     final tStringStarshipModel =
         StarshipModel.fromJson(json.decode(fixture('starship.json')));
-    // test(
-    //   '''should perform a GET request on a URL with string
-    //    being the endpoint and with an application/json header''',
-    //   () async {
-    //     // arrange
-    //     setUpMockHttpClientSuccess200();
-    //     // act
-    //     dataSource.getRandomStarship();
-    //     // assert
-    //     verifyNever(mockHttpClient.get(
-    //         Uri.parse('https://swapi.py4e.com/api/starships/2'),
-    //         headers: {'content-type': 'application/json'}));
-    //   },
-    // );
+    test(
+      '''should perform a GET request on a URL with string
+       being the endpoint and with an application/json header''',
+      () async {
+        // arrange
+        setUpMockHttpClientSuccess200();
+        // act
+        dataSource.getRandomStarship();
+        // assert
+        verify(mockHttpClient.get(
+            Uri.parse('https://swapi.py4e.com/api/starships/2'),
+            headers: {'content-type': 'application/json'}));
+      },
+    );
 
     test(
       'should return Starship when the response code is 200 (success)',
@@ -114,6 +113,52 @@ void main() {
         setUpMockHttpClientFailure404();
         // act
         final call = dataSource.getRandomStarship;
+        // assert
+        expect(() => call(), throwsA(isA<ServerException>()));
+      },
+    );
+  });
+
+  group("getListStarship", () {
+    final tStarshipModels = [
+      StarshipModel.fromJson(json.decode(fixture('starship.json'))),
+      StarshipModel.fromJson(json.decode(fixture('starship.json'))),
+      StarshipModel.fromJson(json.decode(fixture('starship.json')))
+    ];
+    // test(
+    //   '''should perform a GET request on a URL with string
+    //    being the endpoint and with an application/json header''',
+    //   () async {
+    //     // arrange
+    //     setUpMockHttpClientSuccess200();
+    //     // act
+    //     dataSource.getListStarship();
+    //     // assert
+    //     verify(mockHttpClient.get(
+    //         Uri.parse('https://swapi.py4e.com/api/starships/'),
+    //         headers: {'content-type': 'application/json'}));
+    //   },
+    // );
+
+    test(
+      'should return list of starships when the response code is 200 (success)',
+      () async {
+        // arrange
+        setUpMockHttpClientSuccess200();
+        // act
+        final result = await dataSource.getListStarship();
+        // assert
+        expect(result, equals(tStarshipModels));
+      },
+    );
+
+    test(
+      'should throw a ServerException when the response code is not 200',
+      () async {
+        // arrange
+        setUpMockHttpClientFailure404();
+        // act
+        final call = dataSource.getListStarship;
         // assert
         expect(() => call(), throwsA(isA<ServerException>()));
       },

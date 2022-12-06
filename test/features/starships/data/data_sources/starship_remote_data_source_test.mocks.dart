@@ -112,6 +112,15 @@ class MockStarshipRemoteDataSourceImpl extends _i1.Mock
           ),
         )),
       ) as _i5.Future<_i3.StarshipModel>);
+  @override
+  _i5.Future<List<_i3.StarshipModel>> getListStarship() => (super.noSuchMethod(
+        Invocation.method(
+          #getListStarship,
+          [],
+        ),
+        returnValue:
+            _i5.Future<List<_i3.StarshipModel>>.value(<_i3.StarshipModel>[]),
+      ) as _i5.Future<List<_i3.StarshipModel>>);
 }
 
 /// A class which mocks [Client].

@@ -9,22 +9,23 @@ part of 'starship_model.dart';
 StarshipModel _$StarshipModelFromJson(Map<String, dynamic> json) =>
     StarshipModel(
       name: json['name'] as String,
-      model: json['model'] as String,
-      manufacturer: json['manufacturer'] as String,
-      costInCredits: json['cost_in_credits'] as String,
-      length: json['length'] as String,
-      maxAtmospheringSpeed: json['max_atmosphering_speed'] as String,
+      model: json['model'] as String?,
+      manufacturer: json['manufacturer'] as String?,
+      costInCredits: json['cost_in_credits'] as String?,
+      length: json['length'] as String?,
+      maxAtmospheringSpeed: json['max_atmosphering_speed'] as String?,
       crew: json['crew'] as String,
-      passengers: json['passengers'] as String,
-      cargoCapacity: json['cargo_capacity'] as String,
-      consumables: json['consumables'] as String,
-      hyperdriveRating: json['hyperdrive_rating'] as String,
-      mGLT: json['MGLT'] as String,
-      starshipClass: json['starship_class'] as String,
+      passengers: json['passengers'] as String?,
+      cargoCapacity: json['cargo_capacity'] as String?,
+      consumables: json['consumables'] as String?,
+      hyperdriveRating: json['hyperdrive_rating'] as String?,
+      mGLT: json['MGLT'] as String?,
+      starshipClass: json['starship_class'] as String?,
       pilots:
-          (json['pilots'] as List<dynamic>).map((e) => e as String).toList(),
-      films: (json['films'] as List<dynamic>).map((e) => e as String).toList(),
-      url: json['url'] as String,
+          (json['pilots'] as List<dynamic>?)?.map((e) => e as String).toList(),
+      films:
+          (json['films'] as List<dynamic>?)?.map((e) => e as String).toList(),
+      url: json['url'] as String?,
     );
 
 Map<String, dynamic> _$StarshipModelToJson(StarshipModel instance) =>

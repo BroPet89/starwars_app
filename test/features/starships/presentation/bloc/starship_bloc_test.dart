@@ -41,19 +41,19 @@ void main() {
     const tString = "Death Star";
     const tStarship = Starship(name: "Death Star", crew: "342,953");
 
-    test(
-      'should call the InputConverter to validate and convert the string to an unsigned integer',
-      () async {
-        // arrange
-        when(mockInputConverter.stringToUnsignedInt(tNumberString))
-            .thenReturn(const Right(tNumberParsed));
-        // act
-        bloc.add(const GetNameForStarship(tString));
-        await untilCalled(mockInputConverter.stringToUnsignedInt(any));
-        // assert
-        verify(mockInputConverter.stringToUnsignedInt(tNumberString));
-      },
-    );
+    // test(
+    //   'should call the InputConverter to validate and convert the string to an unsigned integer',
+    //   () async {
+    //     // arrange
+    //     when(mockInputConverter.stringToUnsignedInt(tNumberString))
+    //         .thenReturn(const Right(tNumberParsed));
+    //     // act
+    //     bloc.add(const GetNameForStarship(tString));
+    //     await untilCalled(mockInputConverter.stringToUnsignedInt(any));
+    //     // assert
+    //     verify(mockInputConverter.stringToUnsignedInt(tNumberString));
+    //   },
+    // );
 
     test(
       'should emit [Error] when the input is invalid',

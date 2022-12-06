@@ -73,6 +73,15 @@ class MockStarshipRemoteDataSource extends _i1.Mock
           ),
         )),
       ) as _i4.Future<_i2.StarshipModel>);
+  @override
+  _i4.Future<List<_i2.StarshipModel>> getListStarship() => (super.noSuchMethod(
+        Invocation.method(
+          #getListStarship,
+          [],
+        ),
+        returnValue:
+            _i4.Future<List<_i2.StarshipModel>>.value(<_i2.StarshipModel>[]),
+      ) as _i4.Future<List<_i2.StarshipModel>>);
 }
 
 /// A class which mocks [StarshipLocalDataSource].

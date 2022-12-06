@@ -24,18 +24,18 @@ class StarshipBloc extends Bloc<StarshipEvent, StarshipState> {
       required this.getRandomStarship,
       required this.inputConverter})
       : super(Empty()) {
-    on<GetNameForStarship>(_onGetNameForStarshipEvent);
+    //on<GetNameForStarship>(_onGetNameForStarshipEvent);
   }
 
   StarshipState get initialState => Empty();
 
-  _onGetNameForStarshipEvent(
-      GetNameForStarship event, Emitter<StarshipState> emit) {
-    final inputEither = inputConverter.stringToUnsignedInt(event.numberString);
+  // _onGetNameForStarshipEvent(
+  //     GetNameForStarship event, Emitter<StarshipState> emit) {
+  //   final inputEither = inputConverter.stringToUnsignedInt(event.numberString);
 
-    inputEither.fold(
-      (failure) => emit(const Error(errorMessage: invalidInputFailure)),
-      (value) => emit(Empty()),
-    );
-  }
+  //   inputEither.fold(
+  //     (failure) => emit(const Error(errorMessage: invalidInputFailure)),
+  //     (value) => emit(Empty()),
+  //   );
+  // }
 }

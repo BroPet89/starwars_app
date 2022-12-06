@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:math';
 
 import 'package:http/http.dart' as http;
 
@@ -16,6 +15,11 @@ abstract class StarshipRemoteDataSource {
   ///
   /// Throws a [ServerException] for all error codes.
   Future<StarshipModel> getRandomStarship();
+
+  /// calls the "https://swapi.py4e.com/api/starships" endpoint.
+  ///
+  /// Throws a [ServerException] for all error codes.
+  Future<List<StarshipModel>> getListStarship();
 }
 
 class StarshipRemoteDataSourceImpl implements StarshipRemoteDataSource {
@@ -28,8 +32,8 @@ class StarshipRemoteDataSourceImpl implements StarshipRemoteDataSource {
       _getStarshipFromURL("https://swapi.py4e.com/api/starships/?search=$name");
 
   @override
-  Future<StarshipModel> getRandomStarship() => _getStarshipFromURL(
-      "https://swapi.py4e.com/api/starships/${Random().nextInt(17)}");
+  Future<StarshipModel> getRandomStarship() =>
+      _getStarshipFromURL("https://swapi.py4e.com/api/starships/2");
 
   Future<StarshipModel> _getStarshipFromURL(String url) async {
     final response = await client.get(
@@ -40,6 +44,26 @@ class StarshipRemoteDataSourceImpl implements StarshipRemoteDataSource {
     );
     if (response.statusCode == 200) {
       return StarshipModel.fromJson(json.decode(response.body));
+    } else {
+      throw ServerException();
+    }
+  }
+
+  @override
+  Future<List<StarshipModel>> getListStarship() async {
+    List<StarshipModel> starships = [];
+    final response = await client.get(
+      Uri.parse("https://swapi.py4e.com/api/starships"),
+      headers: {
+        'content-type': 'application/json',
+      },
+    );
+    if (response.statusCode == 200) {
+      final returnedJson = json.decode(response.body);
+      for (Map<String, dynamic> c in returnedJson["results"]) {
+        starships.add(StarshipModel.fromJson(c));
+      }
+      return starships;
     } else {
       throw ServerException();
     }

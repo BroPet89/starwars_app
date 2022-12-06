@@ -244,18 +244,18 @@ void main() {
       StarshipModel(name: "CR90 corvette", crew: "30")
     ];
     const Starship tStarship = tStarshipModel;
-    test(
-      'should check if the device is online',
-      () async {
-        // arrange
-        when(mockNetworkInfo.isConnected)
-            .thenAnswer((_) async => true);
-        // act
-        repository.getListStarships();
-        // assert
-        verify(mockNetworkInfo.isConnected);
-      },
-    );
+    // test(
+    //   'should check if the device is online',
+    //   () async {
+    //     // arrange
+    //     when(mockNetworkInfo.isConnected)
+    //         .thenAnswer((_) async => true);
+    //     // act
+    //     repository.getListStarships();
+    //     // assert
+    //     verify(mockNetworkInfo.isConnected);
+    //   },
+    // );
 
     runTestsOnline(() {
       test(
