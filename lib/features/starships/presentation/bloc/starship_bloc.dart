@@ -1,11 +1,10 @@
-import 'package:bloc/bloc.dart';
-import 'package:dartz/dartz.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/foundation.dart';
 import 'package:starwars_app/common/error/failures.dart';
+import 'package:starwars_app/common/use_cases/use_case.dart';
 import '../../../../common/util/input_trimmer.dart';
 
-import '../../../../common/util/input_converter.dart';
 import '../../domain/entities/starship.dart';
 import '../../domain/use_cases/get_list_starship.dart';
 import '../../domain/use_cases/get_random_starship.dart';
@@ -32,25 +31,36 @@ class StarshipBloc extends Bloc<StarshipEvent, StarshipState> {
       required this.inputTrimmer})
       : super(Empty()) {
     on<GetNameForStarship>(_onGetNameForStarshipEvent);
+    on<GetRandomForStarship>(_onGetRandomForStarshipEvent);
   }
 
   _onGetNameForStarshipEvent(
-      GetNameForStarship event, Emitter<StarshipState> emit) {
+    GetNameForStarship event, Emitter<StarshipState> emit) async {
     final inputEither = inputTrimmer.trimWhiteSpace(event.searchTerm);
 
-    inputEither
-        .fold((failure) => emit(const Error(errorMessage: invalidInputFailure)),
-            (value) async {
-      emit(Loading());
-      final failureOrStarship =
-          await getStarshipByName(Params(searchTerm: value));
-      failureOrStarship.fold(
-          (failure) => Error(
-              errorMessage: failure is ServerFailure
-                  ? serverFailureMessage
-                  : cacheFailureMessage),
-          (starship) => Loaded(starship: starship));
-    });
+    inputEither.fold(
+      (failure) async {
+      emit(const Error(errorMessage: invalidInputFailure));
+      }, 
+      (value) async {
+        emit(Loading());
+        final failureOrStarship =
+            await getStarshipByName(Params(searchTerm: value));
+        failureOrStarship.fold(
+          (failure) => emit(Error(errorMessage: _mapFailureToMessage(failure))),
+          (starship) => emit(Loaded(starship: starship))
+        );
+      }
+    );
+  }
+
+  _onGetRandomForStarshipEvent(
+      GetRandomForStarship event, Emitter<StarshipState> emit) async* {
+    emit(Loading());
+    final failureOrStarship = await getRandomStarship(NoParams());
+    failureOrStarship.fold(
+      (failure) => emit(Error(errorMessage: _mapFailureToMessage(failure))),
+      (starship) => emit(Loaded(starship: starship)));
   }
 
   String _mapFailureToMessage(Failure failure) {

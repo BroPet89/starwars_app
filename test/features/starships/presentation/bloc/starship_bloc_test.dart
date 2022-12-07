@@ -3,6 +3,7 @@ import 'package:mockito/annotations.dart';
 import 'package:dartz/dartz.dart';
 import 'package:mockito/mockito.dart';
 import 'package:starwars_app/common/error/failures.dart';
+import 'package:starwars_app/common/use_cases/use_case.dart';
 import 'package:starwars_app/common/util/input_trimmer.dart';
 import 'package:starwars_app/features/starships/domain/entities/starship.dart';
 import 'package:starwars_app/features/starships/domain/use_cases/get_list_starship.dart';
@@ -137,6 +138,66 @@ void main() {
         expectLater(bloc.stream.asBroadcastStream(), emitsInOrder(expected));
         // act
         bloc.add(const GetNameForStarship(tUntrimmed));
+      },
+    );
+  });
+
+  group("getRandomStarship", () {
+    const tStarship = Starship(name: "Death Star", crew: "342,953");
+
+    test(
+      'should get data from the random use case',
+      () async {
+        // arrange
+        when(mockGetRandomStarship(any))
+            .thenAnswer((_) async => const Right(tStarship));
+        // act
+        bloc.add(GetRandomForStarship());
+        await untilCalled(mockGetRandomStarship(any));
+        // assert
+        verify(mockGetRandomStarship(NoParams()));
+      },
+    );
+
+    test(
+      'should emit [Loading, Loaded] when data is gotten successfully',
+      () async {
+        // arrange
+        when(mockGetRandomStarship(any))
+            .thenAnswer((_) async => const Right(tStarship));
+        // assert later
+        final expected = [Loading(), const Loaded(starship: tStarship)];
+        expectLater(bloc.stream.asBroadcastStream(), emitsInOrder(expected));
+        // act
+        bloc.add(GetRandomForStarship());
+      },
+    );
+
+    test(
+      'should emit [Loading, Error] when getting data fails',
+      () async {
+        // arrange
+        when(mockGetRandomStarship(any))
+            .thenAnswer((_) async => Left(ServerFailure()));
+        // assert later
+        final expected = [Loading(), const Error(errorMessage: serverFailureMessage)];
+        expectLater(bloc.stream.asBroadcastStream(), emitsInOrder(expected));
+        // act
+        bloc.add(GetRandomForStarship());
+      },
+    );
+
+    test(
+      'should emit [Loading, Error] with proper message for the error when getting data fails',
+      () async {
+        // arrange
+        when(mockGetRandomStarship(any))
+            .thenAnswer((_) async => Left(CacheFailure()));
+        // assert later
+        final expected = [Loading(), const Error(errorMessage: cacheFailureMessage)];
+        expectLater(bloc.stream.asBroadcastStream(), emitsInOrder(expected));
+        // act
+        bloc.add(GetRandomForStarship());
       },
     );
   });
