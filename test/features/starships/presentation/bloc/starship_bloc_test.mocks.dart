@@ -9,11 +9,13 @@ import 'package:dartz/dartz.dart' as _i3;
 import 'package:mockito/mockito.dart' as _i1;
 import 'package:starwars_app/common/error/failures.dart' as _i6;
 import 'package:starwars_app/common/use_cases/use_case.dart' as _i9;
-import 'package:starwars_app/common/util/input_converter.dart' as _i10;
+import 'package:starwars_app/common/util/input_converter.dart' as _i11;
 import 'package:starwars_app/features/starships/domain/entities/starship.dart'
     as _i7;
 import 'package:starwars_app/features/starships/domain/repositories/starship_repository.dart'
     as _i2;
+import 'package:starwars_app/features/starships/domain/use_cases/get_list_starship.dart'
+    as _i10;
 import 'package:starwars_app/features/starships/domain/use_cases/get_random_starship.dart'
     as _i8;
 import 'package:starwars_app/features/starships/domain/use_cases/get_starship_by_name.dart'
@@ -120,10 +122,46 @@ class MockGetRandomStarship extends _i1.Mock implements _i8.GetRandomStarship {
       ) as _i5.Future<_i3.Either<_i6.Failure, _i7.Starship>>);
 }
 
+/// A class which mocks [GetListStarship].
+///
+/// See the documentation for Mockito's code generation for more information.
+class MockGetListStarship extends _i1.Mock implements _i10.GetListStarship {
+  MockGetListStarship() {
+    _i1.throwOnMissingStub(this);
+  }
+
+  @override
+  _i2.StarshipRepository get repository => (super.noSuchMethod(
+        Invocation.getter(#repository),
+        returnValue: _FakeStarshipRepository_0(
+          this,
+          Invocation.getter(#repository),
+        ),
+      ) as _i2.StarshipRepository);
+  @override
+  _i5.Future<_i3.Either<_i6.Failure, List<_i7.Starship>>> call(
+          _i9.NoParams? params) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #call,
+          [params],
+        ),
+        returnValue:
+            _i5.Future<_i3.Either<_i6.Failure, List<_i7.Starship>>>.value(
+                _FakeEither_1<_i6.Failure, List<_i7.Starship>>(
+          this,
+          Invocation.method(
+            #call,
+            [params],
+          ),
+        )),
+      ) as _i5.Future<_i3.Either<_i6.Failure, List<_i7.Starship>>>);
+}
+
 /// A class which mocks [InputConverter].
 ///
 /// See the documentation for Mockito's code generation for more information.
-class MockInputConverter extends _i1.Mock implements _i10.InputConverter {
+class MockInputConverter extends _i1.Mock implements _i11.InputConverter {
   MockInputConverter() {
     _i1.throwOnMissingStub(this);
   }

@@ -1,8 +1,10 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/foundation.dart';
+
 import '../../../../common/util/input_converter.dart';
 import '../../domain/entities/starship.dart';
+import '../../domain/use_cases/get_list_starship.dart';
 import '../../domain/use_cases/get_random_starship.dart';
 import '../../domain/use_cases/get_starship_by_name.dart';
 
@@ -17,25 +19,29 @@ const String invalidInputFailure =
 class StarshipBloc extends Bloc<StarshipEvent, StarshipState> {
   final GetStarshipByName getStarshipByName;
   final GetRandomStarship getRandomStarship;
+  final GetListStarship getListStarship;
   final InputConverter inputConverter;
 
   StarshipBloc(
       {required this.getStarshipByName,
       required this.getRandomStarship,
+      required this.getListStarship,
       required this.inputConverter})
       : super(Empty()) {
-    //on<GetNameForStarship>(_onGetNameForStarshipEvent);
+    on<GetNameForStarship>(_onGetNameForStarshipEvent);
   }
 
   StarshipState get initialState => Empty();
 
-  // _onGetNameForStarshipEvent(
-  //     GetNameForStarship event, Emitter<StarshipState> emit) {
-  //   final inputEither = inputConverter.stringToUnsignedInt(event.numberString);
+  _onGetNameForStarshipEvent(
+      GetNameForStarship event, Emitter<StarshipState> emit) {
+    final inputEither = inputConverter.stringToUnsignedInt(event.searchTerm);
 
-  //   inputEither.fold(
-  //     (failure) => emit(const Error(errorMessage: invalidInputFailure)),
-  //     (value) => emit(Empty()),
-  //   );
-  // }
+    inputEither.fold(
+      (failure) => emit(const Error(errorMessage: invalidInputFailure)),
+      (value) {
+        getStarshipByName(Params(searchTerm: value));
+      }
+    );
+  }
 }
