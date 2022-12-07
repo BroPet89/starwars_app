@@ -55,7 +55,7 @@ class StarshipBloc extends Bloc<StarshipEvent, StarshipState> {
   }
 
   _onGetRandomForStarshipEvent(
-      GetRandomForStarship event, Emitter<StarshipState> emit) async* {
+      GetRandomForStarship event, Emitter<StarshipState> emit) async {
     emit(Loading());
     final failureOrStarship = await getRandomStarship(NoParams());
     failureOrStarship.fold(
