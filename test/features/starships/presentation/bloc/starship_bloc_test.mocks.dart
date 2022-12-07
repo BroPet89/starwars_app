@@ -9,7 +9,7 @@ import 'package:dartz/dartz.dart' as _i3;
 import 'package:mockito/mockito.dart' as _i1;
 import 'package:starwars_app/common/error/failures.dart' as _i6;
 import 'package:starwars_app/common/use_cases/use_case.dart' as _i9;
-import 'package:starwars_app/common/util/input_converter.dart' as _i11;
+import 'package:starwars_app/common/util/input_trimmer.dart' as _i11;
 import 'package:starwars_app/features/starships/domain/entities/starship.dart'
     as _i7;
 import 'package:starwars_app/features/starships/domain/repositories/starship_repository.dart'
@@ -158,27 +158,27 @@ class MockGetListStarship extends _i1.Mock implements _i10.GetListStarship {
       ) as _i5.Future<_i3.Either<_i6.Failure, List<_i7.Starship>>>);
 }
 
-/// A class which mocks [InputConverter].
+/// A class which mocks [InputTrimmer].
 ///
 /// See the documentation for Mockito's code generation for more information.
-class MockInputConverter extends _i1.Mock implements _i11.InputConverter {
-  MockInputConverter() {
+class MockInputTrimmer extends _i1.Mock implements _i11.InputTrimmer {
+  MockInputTrimmer() {
     _i1.throwOnMissingStub(this);
   }
 
   @override
-  _i3.Either<_i6.Failure, int> stringToUnsignedInt(String? str) =>
+  _i3.Either<_i6.Failure, String> trimWhiteSpace(String? stringToBeTrimmed) =>
       (super.noSuchMethod(
         Invocation.method(
-          #stringToUnsignedInt,
-          [str],
+          #trimWhiteSpace,
+          [stringToBeTrimmed],
         ),
-        returnValue: _FakeEither_1<_i6.Failure, int>(
+        returnValue: _FakeEither_1<_i6.Failure, String>(
           this,
           Invocation.method(
-            #stringToUnsignedInt,
-            [str],
+            #trimWhiteSpace,
+            [stringToBeTrimmed],
           ),
         ),
-      ) as _i3.Either<_i6.Failure, int>);
+      ) as _i3.Either<_i6.Failure, String>);
 }

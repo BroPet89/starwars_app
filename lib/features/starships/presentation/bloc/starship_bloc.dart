@@ -1,6 +1,9 @@
 import 'package:bloc/bloc.dart';
+import 'package:dartz/dartz.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/foundation.dart';
+import 'package:starwars_app/common/error/failures.dart';
+import '../../../../common/util/input_trimmer.dart';
 
 import '../../../../common/util/input_converter.dart';
 import '../../domain/entities/starship.dart';
@@ -20,28 +23,44 @@ class StarshipBloc extends Bloc<StarshipEvent, StarshipState> {
   final GetStarshipByName getStarshipByName;
   final GetRandomStarship getRandomStarship;
   final GetListStarship getListStarship;
-  final InputConverter inputConverter;
+  final InputTrimmer inputTrimmer;
 
   StarshipBloc(
       {required this.getStarshipByName,
       required this.getRandomStarship,
       required this.getListStarship,
-      required this.inputConverter})
+      required this.inputTrimmer})
       : super(Empty()) {
     on<GetNameForStarship>(_onGetNameForStarshipEvent);
   }
 
-  StarshipState get initialState => Empty();
-
   _onGetNameForStarshipEvent(
       GetNameForStarship event, Emitter<StarshipState> emit) {
-    final inputEither = inputConverter.stringToUnsignedInt(event.searchTerm);
+    final inputEither = inputTrimmer.trimWhiteSpace(event.searchTerm);
 
-    inputEither.fold(
-      (failure) => emit(const Error(errorMessage: invalidInputFailure)),
-      (value) {
-        getStarshipByName(Params(searchTerm: value));
-      }
-    );
+    inputEither
+        .fold((failure) => emit(const Error(errorMessage: invalidInputFailure)),
+            (value) async {
+      emit(Loading());
+      final failureOrStarship =
+          await getStarshipByName(Params(searchTerm: value));
+      failureOrStarship.fold(
+          (failure) => Error(
+              errorMessage: failure is ServerFailure
+                  ? serverFailureMessage
+                  : cacheFailureMessage),
+          (starship) => Loaded(starship: starship));
+    });
+  }
+
+  String _mapFailureToMessage(Failure failure) {
+    switch (failure.runtimeType) {
+      case ServerFailure:
+        return serverFailureMessage;
+      case CacheFailure:
+        return cacheFailureMessage;
+      default:
+        return 'Unexpected error';
+    }
   }
 }
