@@ -123,7 +123,12 @@ void main() {
   });
 
   group("getListStarship", () {
-    List<StarshipModel> tStarshipModels = json.decode(fixture('starships.json'));
+    List<StarshipModel> tStarshipModels = [];
+    var parsedShipList = json.decode(fixture('starships.json'));
+    for (Map<String, dynamic> p in parsedShipList) {
+      tStarshipModels.add(StarshipModel.fromJson(p));
+    }
+    
     test(
       '''should perform a GET request on a URL with string
        being the endpoint and with an application/json header''',
