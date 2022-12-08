@@ -51,18 +51,20 @@ void main() {
         when(mockInputTrimmer.trimWhiteSpace(any))
             .thenReturn(const Right(tString));
 
-    // test(
-    //   'should call the InputTrimmer to validate and convert the string to a trimmed string',
-    //   () async {
-    //     // arrange
-    //     setUpMockInputConverterSuccess();
-    //     // act
-    //     bloc.add(const GetNameForStarship(tUntrimmed));
-    //     await untilCalled(mockInputTrimmer.trimWhiteSpace(any));
-    //     // assert
-    //     verify(mockInputTrimmer.trimWhiteSpace(tUntrimmed));
-    //   },
-    // );
+    test(
+      'should call the InputTrimmer to validate and convert the string to a trimmed string',
+      () async {
+        // arrange
+        setUpMockInputConverterSuccess();
+        when(mockGetStarshipByName(any))
+            .thenAnswer((_) async => const Right(tStarship));
+        // act
+        bloc.add(const GetNameForStarship(tUntrimmed));
+        await untilCalled(mockInputTrimmer.trimWhiteSpace(any));
+        // assert
+        verify(mockInputTrimmer.trimWhiteSpace(tUntrimmed));
+      },
+    );
 
     test(
       'should emit [Error] when the input is invalid',
@@ -70,7 +72,6 @@ void main() {
         // arrange
         when(mockInputTrimmer.trimWhiteSpace(any))
             .thenReturn(Left(InvalidInputFailure()));
-
         // assert
         final expected = [
           // Empty(),
