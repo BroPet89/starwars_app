@@ -13,7 +13,7 @@ class StarshipControls extends StatefulWidget {
 
 class StarshipControlsState extends State<StarshipControls> {
   final controller = TextEditingController();
-  late String inputStr;
+  late String inputStr = "";
 
   @override
   Widget build(BuildContext context) {
@@ -21,16 +21,19 @@ class StarshipControlsState extends State<StarshipControls> {
       children: <Widget>[
         TextField(
           controller: controller,
-          keyboardType: TextInputType.number,
           decoration: const InputDecoration(
             border: OutlineInputBorder(),
-            hintText: 'Input a number',
+            hintText: 'Input a search term',
           ),
           onChanged: (value) {
-            inputStr = value;
+            if(value != ""){
+              inputStr = value;
+            }
           },
           onSubmitted: (_) {
+            if(inputStr != ""){
             dispatchConcrete();
+            }
           },
         ),
         const SizedBox(height: 10),
@@ -41,7 +44,7 @@ class StarshipControlsState extends State<StarshipControls> {
                 style: ButtonStyle(
                   backgroundColor: MaterialStatePropertyAll<Color>(Theme.of(context).colorScheme.secondary)
                 ),
-                onPressed: dispatchConcrete,
+                onPressed: inputStr != "" ? dispatchConcrete : null,
                 child: const Text('Search'),
               ),
             ),
@@ -60,12 +63,13 @@ class StarshipControlsState extends State<StarshipControls> {
 
   void dispatchConcrete() {
     controller.clear();
-    BlocProvider.of<StarshipBloc>(context)
-        .add(GetNameForStarship(inputStr));
+    BlocProvider.of<StarshipBloc>(context).add(GetNameForStarship(inputStr));
+    FocusScope.of(context).requestFocus(FocusNode());
   }
 
   void dispatchRandom() {
     controller.clear();
     BlocProvider.of<StarshipBloc>(context).add(GetRandomForStarship());
+    FocusScope.of(context).requestFocus(FocusNode());
   }
 }
