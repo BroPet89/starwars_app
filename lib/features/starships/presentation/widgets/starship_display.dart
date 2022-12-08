@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:starwars_app/features/starships/domain/entities/starship.dart';
+import '../../domain/entities/starship.dart';
 
 class StarshipDisplay extends StatelessWidget {
   final Starship starship;

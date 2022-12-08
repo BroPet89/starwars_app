@@ -13,7 +13,9 @@ class StarshipListPage extends StatelessWidget {
       appBar: AppBar(
         title: const Text("Spaceships"),
       ),
-      body: buildBody(context),
+      body: SingleChildScrollView(
+        child: buildBody(context),
+      ),
     );
   }
 
