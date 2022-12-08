@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import '../widgets/starship_controls.dart';
 import '../bloc/starship_bloc.dart';
 import '../widgets/widgets.dart';
 import '../../../../injection_container.dart';
@@ -46,6 +47,9 @@ class StarshipListPage extends StatelessWidget {
                   return const LoadingWidget();
                 },
               ),
+              const SizedBox(height: 20),
+              // Bottom half
+              const StarshipControls(),
             ],
           ),
         ),
