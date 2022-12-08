@@ -1,10 +1,10 @@
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/foundation.dart';
-import 'package:starwars_app/common/error/failures.dart';
-import 'package:starwars_app/common/use_cases/use_case.dart';
-import '../../../../common/util/input_trimmer.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../../common/error/failures.dart';
+import '../../../../common/use_cases/use_case.dart';
+import '../../../../common/util/input_trimmer.dart';
 import '../../domain/entities/starship.dart';
 import '../../domain/use_cases/get_list_starship.dart';
 import '../../domain/use_cases/get_random_starship.dart';

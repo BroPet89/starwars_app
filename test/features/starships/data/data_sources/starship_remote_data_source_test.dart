@@ -25,6 +25,11 @@ void main() {
         .thenAnswer((_) async => http.Response(fixture('starship.json'), 200));
   }
 
+  void setUpMockHttpClientSuccess200WithList() {
+    when(mockHttpClient.get(any, headers: anyNamed('headers')))
+        .thenAnswer((_) async => http.Response(fixture('starships.json'), 200));
+  }
+
   void setUpMockHttpClientFailure404() {
     when(mockHttpClient.get(any, headers: anyNamed('headers')))
         .thenAnswer((_) async => http.Response('Something went wrong', 404));
@@ -118,31 +123,27 @@ void main() {
   });
 
   group("getListStarship", () {
-    final tStarshipModels = [
-      StarshipModel.fromJson(json.decode(fixture('starship.json'))),
-      StarshipModel.fromJson(json.decode(fixture('starship.json'))),
-      StarshipModel.fromJson(json.decode(fixture('starship.json')))
-    ];
-    // test(
-    //   '''should perform a GET request on a URL with string
-    //    being the endpoint and with an application/json header''',
-    //   () async {
-    //     // arrange
-    //     setUpMockHttpClientSuccess200();
-    //     // act
-    //     dataSource.getListStarship();
-    //     // assert
-    //     verify(mockHttpClient.get(
-    //         Uri.parse('https://swapi.py4e.com/api/starships/'),
-    //         headers: {'content-type': 'application/json'}));
-    //   },
-    // );
+    List<StarshipModel> tStarshipModels = json.decode(fixture('starships.json'));
+    test(
+      '''should perform a GET request on a URL with string
+       being the endpoint and with an application/json header''',
+      () async {
+        // arrange
+        setUpMockHttpClientSuccess200WithList();
+        // act
+        dataSource.getListStarship();
+        // assert
+        verify(mockHttpClient.get(
+            Uri.parse('https://swapi.py4e.com/api/starships?format=json'),
+            headers: {'content-type': 'application/json'}));
+      },
+    );
 
     test(
       'should return list of starships when the response code is 200 (success)',
       () async {
         // arrange
-        setUpMockHttpClientSuccess200();
+        setUpMockHttpClientSuccess200WithList();
         // act
         final result = await dataSource.getListStarship();
         // assert

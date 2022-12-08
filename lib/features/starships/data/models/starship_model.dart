@@ -5,7 +5,7 @@ import 'package:json_annotation/json_annotation.dart';
 part 'starship_model.g.dart';
 
 @JsonSerializable()
-class StarshipModel extends Starship  {
+class StarshipModel extends Starship {
   const StarshipModel({
     required String name, 
     String? model, 
