@@ -250,4 +250,24 @@ class MockStarshipLocalDataSourceImpl extends _i1.Mock
         returnValue: _i4.Future<void>.value(),
         returnValueForMissingStub: _i4.Future<void>.value(),
       ) as _i4.Future<void>);
+  @override
+  _i4.Future<List<_i3.StarshipModel>> getLastStarshipModels() =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #getLastStarshipModels,
+          [],
+        ),
+        returnValue:
+            _i4.Future<List<_i3.StarshipModel>>.value(<_i3.StarshipModel>[]),
+      ) as _i4.Future<List<_i3.StarshipModel>>);
+  @override
+  _i4.Future<void> cacheStarships(List<_i3.StarshipModel>? starshipsToCache) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #cacheStarships,
+          [starshipsToCache],
+        ),
+        returnValue: _i4.Future<void>.value(),
+        returnValueForMissingStub: _i4.Future<void>.value(),
+      ) as _i4.Future<void>);
 }

@@ -59,6 +59,23 @@ class StarshipRepositoryImpl implements StarshipRepository {
 
   @override
   Future<Either<Failure, List<Starship>>> getListStarship() async {
-     return Left(CacheFailure());
+    if (await networkInfo.isConnected) {
+      try {
+        final remoteStarships =
+            await starshipRemoteDataSource.getListStarship();
+        starshipLocalDataSource.cacheStarships(remoteStarships);
+        return Right(remoteStarships);
+      } on ServerException {
+        return Left(ServerFailure());
+      }
+    } else {
+      try {
+        final localStarships =
+            await starshipLocalDataSource.getLastStarshipModels();
+        return Right(localStarships);
+      } on CacheException {
+        return Left(CacheFailure());
+      }
+    }
   }
 }

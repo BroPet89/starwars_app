@@ -14,10 +14,18 @@ abstract class StarshipLocalDataSource {
   /// Throws [CacheException] if no cached data is present
   Future<StarshipModel> getLastStarshipModel();
 
+  /// Get the cached [List<StarshipModel>] which was gotten the last time
+  /// the user had an internet connection
+  ///
+  /// Throws [CacheException] if no cached data is present
+  Future<List<StarshipModel>> getLastStarshipModels();
+
   Future<void> cacheStarship(StarshipModel starshipToCache);
+  Future<void> cacheStarships(List<StarshipModel> starshipsToCache);
 }
 
 const CACHED_STARSHIP = "CACHED_STARSHIP";
+const CACHED_STARSHIPS = "CACHED_STARSHIPS";
 
 class StarshipLocalDataSourceImpl implements StarshipLocalDataSource {
   final SharedPreferences sharedPreferences;
@@ -38,5 +46,23 @@ class StarshipLocalDataSourceImpl implements StarshipLocalDataSource {
   Future<void> cacheStarship(StarshipModel starshipToCache) {
     return sharedPreferences.setString(
         CACHED_STARSHIP, json.encode(starshipToCache.toJson()));
+  }
+
+  @override
+  Future<List<StarshipModel>> getLastStarshipModels() {
+    final jsonString = sharedPreferences.getString(CACHED_STARSHIPS);
+    if (jsonString != null) {
+      var mappedString = json.decode(jsonString);
+      return Future.value(List<StarshipModel>.from(mappedString));
+    } else {
+      throw CacheException();
+    }
+  }
+
+  @override
+  Future<void> cacheStarships(List<StarshipModel> starshipsToCache) {
+    var mappedStarships = starshipsToCache.asMap();
+    return sharedPreferences.setString(
+        CACHED_STARSHIPS, json.encode(mappedStarships));
   }
 }
