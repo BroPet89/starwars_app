@@ -113,14 +113,14 @@ class MockStarshipRemoteDataSourceImpl extends _i1.Mock
         )),
       ) as _i5.Future<_i3.StarshipModel>);
   @override
-  _i5.Future<List<_i3.StarshipModel>> getListStarship() => (super.noSuchMethod(
+  _i5.Future<Map<String, dynamic>> getListStarship() => (super.noSuchMethod(
         Invocation.method(
           #getListStarship,
           [],
         ),
         returnValue:
-            _i5.Future<List<_i3.StarshipModel>>.value(<_i3.StarshipModel>[]),
-      ) as _i5.Future<List<_i3.StarshipModel>>);
+            _i5.Future<Map<String, dynamic>>.value(<String, dynamic>{}),
+      ) as _i5.Future<Map<String, dynamic>>);
 }
 
 /// A class which mocks [Client].

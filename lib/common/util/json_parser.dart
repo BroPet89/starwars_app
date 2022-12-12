@@ -1,20 +1,21 @@
-import 'dart:convert';
-
 import 'package:dartz/dartz.dart';
+import 'package:starwars_app/common/error/exceptions.dart';
 import 'package:starwars_app/common/error/failures.dart';
-import 'package:http/http.dart' as http;
 
-class GetObjectFromReturnedJson {
+class JsonParser {
   Either<Failure, List<Map<String, dynamic>>> getResultsFromresponse(
-      http.Response response) {
+      Map<String, dynamic> parsedJson) {
     List<Map<String, dynamic>> results = [];
     try {
-      final parsedJson = json.decode(response.body);
-      for (Map<String, dynamic> p in parsedJson["results"]) {
-        results.add(p);
+      if(parsedJson.containsKey("results")) {
+        for (Map<String, dynamic> p in parsedJson["results"]) {
+          results.add(p);
+        }
+        return Right(results);
+      } else {
+        throw InvalidJsonException();
       }
-      return Right(results);
-    } on Exception {
+    } on InvalidJsonException {
       return Left(InvalidJsonFailure());
     }
   }

@@ -3,14 +3,17 @@
 // Do not manually edit this file.
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'dart:async' as _i4;
+import 'dart:async' as _i5;
 
+import 'package:dartz/dartz.dart' as _i3;
 import 'package:mockito/mockito.dart' as _i1;
-import 'package:starwars_app/common/network/network_info.dart' as _i6;
+import 'package:starwars_app/common/error/failures.dart' as _i9;
+import 'package:starwars_app/common/network/network_info.dart' as _i7;
+import 'package:starwars_app/common/util/json_parser.dart' as _i8;
 import 'package:starwars_app/features/starships/data/data_sources/starship_local_data_source.dart'
-    as _i5;
+    as _i6;
 import 'package:starwars_app/features/starships/data/data_sources/starship_remote_data_source.dart'
-    as _i3;
+    as _i4;
 import 'package:starwars_app/features/starships/data/models/starship_model.dart'
     as _i2;
 
@@ -35,121 +38,157 @@ class _FakeStarshipModel_0 extends _i1.SmartFake implements _i2.StarshipModel {
         );
 }
 
+class _FakeEither_1<L, R> extends _i1.SmartFake implements _i3.Either<L, R> {
+  _FakeEither_1(
+    Object parent,
+    Invocation parentInvocation,
+  ) : super(
+          parent,
+          parentInvocation,
+        );
+}
+
 /// A class which mocks [StarshipRemoteDataSource].
 ///
 /// See the documentation for Mockito's code generation for more information.
 class MockStarshipRemoteDataSource extends _i1.Mock
-    implements _i3.StarshipRemoteDataSource {
+    implements _i4.StarshipRemoteDataSource {
   MockStarshipRemoteDataSource() {
     _i1.throwOnMissingStub(this);
   }
 
   @override
-  _i4.Future<_i2.StarshipModel> getStarshipByName(String? name) =>
+  _i5.Future<_i2.StarshipModel> getStarshipByName(String? name) =>
       (super.noSuchMethod(
         Invocation.method(
           #getStarshipByName,
           [name],
         ),
-        returnValue: _i4.Future<_i2.StarshipModel>.value(_FakeStarshipModel_0(
+        returnValue: _i5.Future<_i2.StarshipModel>.value(_FakeStarshipModel_0(
           this,
           Invocation.method(
             #getStarshipByName,
             [name],
           ),
         )),
-      ) as _i4.Future<_i2.StarshipModel>);
+      ) as _i5.Future<_i2.StarshipModel>);
   @override
-  _i4.Future<_i2.StarshipModel> getRandomStarship() => (super.noSuchMethod(
+  _i5.Future<_i2.StarshipModel> getRandomStarship() => (super.noSuchMethod(
         Invocation.method(
           #getRandomStarship,
           [],
         ),
-        returnValue: _i4.Future<_i2.StarshipModel>.value(_FakeStarshipModel_0(
+        returnValue: _i5.Future<_i2.StarshipModel>.value(_FakeStarshipModel_0(
           this,
           Invocation.method(
             #getRandomStarship,
             [],
           ),
         )),
-      ) as _i4.Future<_i2.StarshipModel>);
+      ) as _i5.Future<_i2.StarshipModel>);
   @override
-  _i4.Future<List<_i2.StarshipModel>> getListStarship() => (super.noSuchMethod(
+  _i5.Future<Map<String, dynamic>> getListStarship() => (super.noSuchMethod(
         Invocation.method(
           #getListStarship,
           [],
         ),
         returnValue:
-            _i4.Future<List<_i2.StarshipModel>>.value(<_i2.StarshipModel>[]),
-      ) as _i4.Future<List<_i2.StarshipModel>>);
+            _i5.Future<Map<String, dynamic>>.value(<String, dynamic>{}),
+      ) as _i5.Future<Map<String, dynamic>>);
 }
 
 /// A class which mocks [StarshipLocalDataSource].
 ///
 /// See the documentation for Mockito's code generation for more information.
 class MockStarshipLocalDataSource extends _i1.Mock
-    implements _i5.StarshipLocalDataSource {
+    implements _i6.StarshipLocalDataSource {
   MockStarshipLocalDataSource() {
     _i1.throwOnMissingStub(this);
   }
 
   @override
-  _i4.Future<_i2.StarshipModel> getLastStarshipModel() => (super.noSuchMethod(
+  _i5.Future<_i2.StarshipModel> getLastStarshipModel() => (super.noSuchMethod(
         Invocation.method(
           #getLastStarshipModel,
           [],
         ),
-        returnValue: _i4.Future<_i2.StarshipModel>.value(_FakeStarshipModel_0(
+        returnValue: _i5.Future<_i2.StarshipModel>.value(_FakeStarshipModel_0(
           this,
           Invocation.method(
             #getLastStarshipModel,
             [],
           ),
         )),
-      ) as _i4.Future<_i2.StarshipModel>);
+      ) as _i5.Future<_i2.StarshipModel>);
   @override
-  _i4.Future<List<_i2.StarshipModel>> getLastStarshipModels() =>
+  _i5.Future<List<_i2.StarshipModel>> getLastStarshipModels() =>
       (super.noSuchMethod(
         Invocation.method(
           #getLastStarshipModels,
           [],
         ),
         returnValue:
-            _i4.Future<List<_i2.StarshipModel>>.value(<_i2.StarshipModel>[]),
-      ) as _i4.Future<List<_i2.StarshipModel>>);
+            _i5.Future<List<_i2.StarshipModel>>.value(<_i2.StarshipModel>[]),
+      ) as _i5.Future<List<_i2.StarshipModel>>);
   @override
-  _i4.Future<void> cacheStarship(_i2.StarshipModel? starshipToCache) =>
+  _i5.Future<void> cacheStarship(_i2.StarshipModel? starshipToCache) =>
       (super.noSuchMethod(
         Invocation.method(
           #cacheStarship,
           [starshipToCache],
         ),
-        returnValue: _i4.Future<void>.value(),
-        returnValueForMissingStub: _i4.Future<void>.value(),
-      ) as _i4.Future<void>);
+        returnValue: _i5.Future<void>.value(),
+        returnValueForMissingStub: _i5.Future<void>.value(),
+      ) as _i5.Future<void>);
   @override
-  _i4.Future<void> cacheStarships(List<_i2.StarshipModel>? starshipsToCache) =>
+  _i5.Future<void> cacheStarships(List<_i2.StarshipModel>? starshipsToCache) =>
       (super.noSuchMethod(
         Invocation.method(
           #cacheStarships,
           [starshipsToCache],
         ),
-        returnValue: _i4.Future<void>.value(),
-        returnValueForMissingStub: _i4.Future<void>.value(),
-      ) as _i4.Future<void>);
+        returnValue: _i5.Future<void>.value(),
+        returnValueForMissingStub: _i5.Future<void>.value(),
+      ) as _i5.Future<void>);
 }
 
 /// A class which mocks [NetworkInfo].
 ///
 /// See the documentation for Mockito's code generation for more information.
-class MockNetworkInfo extends _i1.Mock implements _i6.NetworkInfo {
+class MockNetworkInfo extends _i1.Mock implements _i7.NetworkInfo {
   MockNetworkInfo() {
     _i1.throwOnMissingStub(this);
   }
 
   @override
-  _i4.Future<bool> get isConnected => (super.noSuchMethod(
+  _i5.Future<bool> get isConnected => (super.noSuchMethod(
         Invocation.getter(#isConnected),
-        returnValue: _i4.Future<bool>.value(false),
-      ) as _i4.Future<bool>);
+        returnValue: _i5.Future<bool>.value(false),
+      ) as _i5.Future<bool>);
+}
+
+/// A class which mocks [JsonParser].
+///
+/// See the documentation for Mockito's code generation for more information.
+class MockJsonParser extends _i1.Mock implements _i8.JsonParser {
+  MockJsonParser() {
+    _i1.throwOnMissingStub(this);
+  }
+
+  @override
+  _i3.Either<_i9.Failure, List<Map<String, dynamic>>> getResultsFromresponse(
+          Map<String, dynamic>? parsedJson) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #getResultsFromresponse,
+          [parsedJson],
+        ),
+        returnValue: _FakeEither_1<_i9.Failure, List<Map<String, dynamic>>>(
+          this,
+          Invocation.method(
+            #getResultsFromresponse,
+            [parsedJson],
+          ),
+        ),
+      ) as _i3.Either<_i9.Failure, List<Map<String, dynamic>>>);
 }

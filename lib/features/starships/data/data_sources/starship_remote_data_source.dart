@@ -19,7 +19,7 @@ abstract class StarshipRemoteDataSource {
   /// calls the "https://swapi.py4e.com/api/starships" endpoint.
   ///
   /// Throws a [ServerException] for all error codes.
-  Future<List<StarshipModel>> getListStarship();
+  Future<Map<String, dynamic>> getListStarship();
 }
 
 class StarshipRemoteDataSourceImpl implements StarshipRemoteDataSource {
@@ -50,8 +50,7 @@ class StarshipRemoteDataSourceImpl implements StarshipRemoteDataSource {
   }
 
   @override
-  Future<List<StarshipModel>> getListStarship() async {
-    List<StarshipModel> starShipList = [];
+  Future<Map<String, dynamic>> getListStarship() async {
     final response = await client.get(
       Uri.parse("https://swapi.py4e.com/api/starships?format=json"),
       headers: {
@@ -59,10 +58,8 @@ class StarshipRemoteDataSourceImpl implements StarshipRemoteDataSource {
       },
     );
     if (response.statusCode == 200) {
-      for (Map<String, dynamic> p in json.decode(response.body)) {
-        starShipList.add(StarshipModel.fromJson(p));
-      }
-      return starShipList;
+      final parsedJson = json.decode(response.body);
+      return parsedJson;
     } else {
       throw ServerException();
     }

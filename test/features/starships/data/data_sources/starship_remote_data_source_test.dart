@@ -25,14 +25,9 @@ void main() {
         .thenAnswer((_) async => http.Response(fixture('starship.json'), 200));
   }
 
-  void setUpMockHttpClientSuccess200Results() {
-    when(mockHttpClient.get(any, headers: anyNamed('headers'))).thenAnswer(
-        (_) async => http.Response(fixture('starship_results.json'), 200));
-  }
-
   void setUpMockHttpClientSuccess200WithList() {
     when(mockHttpClient.get(any, headers: anyNamed('headers')))
-        .thenAnswer((_) async => http.Response(fixture('starships.json'), 200));
+        .thenAnswer((_) async => http.Response(fixture('starship_results.json'), 200));
   }
 
   void setUpMockHttpClientFailure404() {
@@ -128,11 +123,7 @@ void main() {
   });
 
   group("getListStarship", () {
-    List<StarshipModel> tStarshipModels = [];
-    var parsedShipList = json.decode(fixture('starships_results.json'));
-    for (Map<String, dynamic> p in parsedShipList["results"]) {
-      tStarshipModels.add(StarshipModel.fromJson(p));
-    }
+    Map<String, dynamic> parsedShipList = json.decode(fixture('starship_results.json'));
 
     test(
       '''should perform a GET request on a URL with string
@@ -150,14 +141,14 @@ void main() {
     );
 
     test(
-      'should return list of starships when the response code is 200 (success)',
+      'should return a Map<String, dynamic> when the response code is 200 (success)',
       () async {
         // arrange
         setUpMockHttpClientSuccess200WithList();
         // act
         final result = await dataSource.getListStarship();
         // assert
-        expect(result, equals(tStarshipModels));
+        expect(result, equals(parsedShipList));
       },
     );
 

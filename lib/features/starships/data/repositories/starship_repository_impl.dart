@@ -1,4 +1,5 @@
 import 'package:dartz/dartz.dart';
+import 'package:starwars_app/common/util/json_parser.dart';
 
 import '../../../../common/error/exceptions.dart';
 import '../../../../common/error/failures.dart';
@@ -14,11 +15,13 @@ typedef _ConcreteOrRandomPicker = Future<StarshipModel> Function();
 class StarshipRepositoryImpl implements StarshipRepository {
   final StarshipRemoteDataSource starshipRemoteDataSource;
   final StarshipLocalDataSource starshipLocalDataSource;
+  final JsonParser jsonParser;
   final NetworkInfo networkInfo;
 
   StarshipRepositoryImpl(
       {required this.starshipRemoteDataSource,
       required this.starshipLocalDataSource,
+      required this.jsonParser,
       required this.networkInfo});
 
   @override
@@ -63,8 +66,15 @@ class StarshipRepositoryImpl implements StarshipRepository {
       try {
         final remoteStarships =
             await starshipRemoteDataSource.getListStarship();
-        starshipLocalDataSource.cacheStarships(remoteStarships);
-        return Right(remoteStarships);
+        var parsedResponse = jsonParser.getResultsFromresponse(remoteStarships);
+        parsedResponse.fold((failure) {
+          throw ServerException();
+        }, (mapList) {
+          List<StarshipModel> starships = List<StarshipModel>.from(mapList);
+          starshipLocalDataSource.cacheStarships(starships);
+          return Right(starships);
+        });
+        throw ServerException();
       } on ServerException {
         return Left(ServerFailure());
       }

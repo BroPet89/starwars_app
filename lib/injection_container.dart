@@ -1,6 +1,7 @@
 import 'package:get_it/get_it.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:starwars_app/common/util/json_parser.dart';
 import 'common/network/network_info.dart';
 import 'features/starships/data/data_sources/starship_local_data_source.dart';
 import 'features/starships/data/data_sources/starship_remote_data_source.dart';
@@ -35,6 +36,7 @@ Future<void> init() async {
   // Repository
   get.registerLazySingleton<StarshipRepository>(() => StarshipRepositoryImpl(
         networkInfo: get(),
+        jsonParser: get(),
         starshipLocalDataSource: get(),
         starshipRemoteDataSource: get(),
       ));
@@ -53,5 +55,6 @@ Future<void> init() async {
   final sharedPreferences = await SharedPreferences.getInstance();
   get.registerLazySingleton(() => sharedPreferences);
   get.registerLazySingleton(() => http.Client());
+  get.registerLazySingleton(() => JsonParser());
   get.registerLazySingleton(() => InternetConnectionChecker());
 }

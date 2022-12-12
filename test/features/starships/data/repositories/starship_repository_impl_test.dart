@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:dartz/dartz.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/annotations.dart';
@@ -5,30 +7,45 @@ import 'package:mockito/mockito.dart';
 import 'package:starwars_app/common/error/exceptions.dart';
 import 'package:starwars_app/common/error/failures.dart';
 import 'package:starwars_app/common/network/network_info.dart';
+import 'package:starwars_app/common/util/json_parser.dart';
 import 'package:starwars_app/features/starships/data/data_sources/starship_local_data_source.dart';
 import 'package:starwars_app/features/starships/data/data_sources/starship_remote_data_source.dart';
 import 'package:starwars_app/features/starships/data/models/starship_model.dart';
 import 'package:starwars_app/features/starships/data/repositories/starship_repository_impl.dart';
 import 'package:starwars_app/features/starships/domain/entities/starship.dart';
 
+import '../../../../fixtures/fixture_reader.dart';
 import 'starship_repository_impl_test.mocks.dart';
 
-@GenerateMocks([StarshipRemoteDataSource, StarshipLocalDataSource, NetworkInfo])
+@GenerateMocks([
+  StarshipRemoteDataSource,
+  StarshipLocalDataSource,
+  NetworkInfo,
+  JsonParser
+])
 void main() {
   late StarshipRepositoryImpl repository;
   late MockStarshipRemoteDataSource mockRemoteDataSource;
   late MockStarshipLocalDataSource mockLocalDataSource;
   late MockNetworkInfo mockNetworkInfo;
+  late MockJsonParser mockJsonParser;
 
   setUp(() {
     mockRemoteDataSource = MockStarshipRemoteDataSource();
     mockLocalDataSource = MockStarshipLocalDataSource();
     mockNetworkInfo = MockNetworkInfo();
+    mockJsonParser = MockJsonParser();
     repository = StarshipRepositoryImpl(
         starshipRemoteDataSource: mockRemoteDataSource,
         starshipLocalDataSource: mockLocalDataSource,
+        jsonParser: mockJsonParser,
         networkInfo: mockNetworkInfo);
   });
+
+  final List<Map<String, dynamic>> dynamicList = json.decode(fixture("starships.json"));
+  final List<StarshipModel> shipModels =
+      List<StarshipModel>.from(json.decode(fixture("starships.json")));
+      
 
   void runTestsOnline(Function body) {
     group("device is online", () {
@@ -48,6 +65,10 @@ void main() {
     });
   }
 
+  void setUpJsonParserSuccess() =>
+      when(mockJsonParser.getResultsFromresponse(any))
+          .thenReturn(Right(dynamicList));
+
   const tString = "Death Star";
   const tStarshipModel = StarshipModel(name: tString, crew: "342,953");
   const Starship tStarship = tStarshipModel;
@@ -59,7 +80,7 @@ void main() {
         // arrange
         when(mockNetworkInfo.isConnected).thenAnswer((_) async => true);
         when(mockRemoteDataSource.getStarshipByName(tString))
-        .thenAnswer((_) async => tStarshipModel);
+            .thenAnswer((_) async => tStarshipModel);
         // act
         repository.getStarshipByName(tString);
         // assert
@@ -246,6 +267,10 @@ void main() {
       StarshipModel(name: "CR90 corvette", crew: "30"),
       StarshipModel(name: "CR90 corvette", crew: "30")
     ];
+    final resultsResponse = fixture('starship_results.json');
+    Map<String, dynamic> parsedShipList =
+        json.decode(fixture('starship_results.json'));
+
     const List<Starship> tStarships = tStarshipModels;
     test(
       'should check if the device is online',
@@ -253,7 +278,7 @@ void main() {
         // arrange
         when(mockNetworkInfo.isConnected).thenAnswer((_) async => true);
         when(mockRemoteDataSource.getListStarship())
-            .thenAnswer((_) async => tStarshipModels);
+            .thenAnswer((_) async => parsedShipList);
         // act
         repository.getListStarship();
         // assert
@@ -267,7 +292,7 @@ void main() {
         () async {
           // arrange
           when(mockRemoteDataSource.getListStarship())
-              .thenAnswer((_) async => tStarshipModels);
+              .thenAnswer((_) async => parsedShipList);
           // act
           final result = await repository.getListStarship();
           // assert
@@ -281,7 +306,7 @@ void main() {
         () async {
           // arrange
           when(mockRemoteDataSource.getListStarship())
-              .thenAnswer((_) async => tStarshipModels);
+              .thenAnswer((_) async => parsedShipList);
           // act
           await repository.getListStarship();
           // assert
@@ -306,7 +331,7 @@ void main() {
       );
     });
 
-     runTestsOffline(() {
+    runTestsOffline(() {
       test(
         'should return last locally cached starship when the cache data is present',
         () async {

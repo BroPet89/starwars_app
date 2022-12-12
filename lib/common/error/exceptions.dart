@@ -5,3 +5,7 @@ class ServerException implements Exception {
 class CacheException implements Exception {
   final String message = "Cache error";
 }
+
+class InvalidJsonException implements Exception {
+  final String message = "Invalid Json";
+}
