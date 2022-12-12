@@ -25,6 +25,11 @@ void main() {
         .thenAnswer((_) async => http.Response(fixture('starship.json'), 200));
   }
 
+  void setUpMockHttpClientSuccess200Results() {
+    when(mockHttpClient.get(any, headers: anyNamed('headers'))).thenAnswer(
+        (_) async => http.Response(fixture('starship_results.json'), 200));
+  }
+
   void setUpMockHttpClientSuccess200WithList() {
     when(mockHttpClient.get(any, headers: anyNamed('headers')))
         .thenAnswer((_) async => http.Response(fixture('starships.json'), 200));
@@ -124,11 +129,11 @@ void main() {
 
   group("getListStarship", () {
     List<StarshipModel> tStarshipModels = [];
-    var parsedShipList = json.decode(fixture('starships.json'));
-    for (Map<String, dynamic> p in parsedShipList) {
+    var parsedShipList = json.decode(fixture('starships_results.json'));
+    for (Map<String, dynamic> p in parsedShipList["results"]) {
       tStarshipModels.add(StarshipModel.fromJson(p));
     }
-    
+
     test(
       '''should perform a GET request on a URL with string
        being the endpoint and with an application/json header''',

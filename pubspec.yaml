@@ -8,34 +8,28 @@ environment:
   sdk: '>=2.19.0-444.0.dev <4.0.0'
 
 dependencies:
+  build_runner: ^2.3.2
+  cupertino_icons: ^1.0.2
+  dartz: ^0.10.1
+  equatable: ^2.0.5
   flutter:
     sdk: flutter
-  flutter_localizations:
-    sdk: flutter 
-  intl: ^0.17.0
-  cupertino_icons: ^1.0.2
-  # Service locator
-  get_it: ^7.2.0
-  # Bloc for state management
   flutter_bloc: ^8.1.1
-  # Value equality
-  equatable: ^2.0.5
-  # Functional programming
-  dartz: ^0.10.1
-  # Remote API
-  internet_connection_checker: ^1.0.0+1
-  http: ^0.13.5
-  #Local cache
-  shared_preferences: ^2.0.15
-  build_runner: ^2.3.2
-  json_serializable: ^6.5.4
-  json_annotation: ^4.7.0
+  flutter_localizations:
+    sdk: flutter
   freezed: ^2.3.0
+  get_it: ^7.2.0
+  http: ^0.13.5
+  internet_connection_checker: ^1.0.0+1
+  intl: ^0.17.0
+  json_annotation: ^4.7.0
+  json_serializable: ^6.5.4
+  shared_preferences: ^2.0.15
 
 dev_dependencies:
+  flutter_lints: ^2.0.0
   flutter_test:
     sdk: flutter
-  flutter_lints: ^2.0.0
   mockito: ^5.3.2
 
 flutter:
