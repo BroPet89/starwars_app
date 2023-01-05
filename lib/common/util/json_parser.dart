@@ -1,5 +1,5 @@
 import 'package:dartz/dartz.dart';
-import 'package:starwars_app/common/error/exceptions.dart';
+import '../error/exceptions.dart';
 import 'package:starwars_app/common/error/failures.dart';
 
 class JsonParser {

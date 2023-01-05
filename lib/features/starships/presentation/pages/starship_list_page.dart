@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '../widgets/starship_controls.dart';
-import '../bloc/starship_bloc.dart';
-import '../widgets/widgets.dart';
+
 import '../../../../injection_container.dart';
+import '../bloc/starship_bloc.dart';
+import '../widgets/starship_controls.dart';
+import '../widgets/widgets.dart';
 
 class StarshipListPage extends StatelessWidget {
   const StarshipListPage({super.key});
