@@ -3,9 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class StarshipControls extends StatefulWidget {
-  const StarshipControls({
-    Key? key,
-  }) : super(key: key);
+  const StarshipControls({super.key});
 
   @override
   StarshipControlsState createState() => StarshipControlsState();
@@ -26,13 +24,13 @@ class StarshipControlsState extends State<StarshipControls> {
             hintText: 'Input a search term',
           ),
           onChanged: (value) {
-            if(value != ""){
+            if (value != "") {
               inputStr = value;
             }
           },
           onSubmitted: (_) {
-            if(inputStr != ""){
-            dispatchConcrete();
+            if (inputStr != "") {
+              dispatchConcrete();
             }
           },
         ),
@@ -40,17 +38,17 @@ class StarshipControlsState extends State<StarshipControls> {
         Row(
           children: <Widget>[
             Expanded(
-              child:  ElevatedButton(
+              child: ElevatedButton(
                 style: ButtonStyle(
-                  backgroundColor: MaterialStatePropertyAll<Color>(Theme.of(context).colorScheme.secondary)
-                ),
+                    backgroundColor: WidgetStatePropertyAll<Color>(
+                        Theme.of(context).colorScheme.secondary)),
                 onPressed: inputStr != "" ? dispatchConcrete : null,
                 child: const Text('Search'),
               ),
             ),
             const SizedBox(width: 10),
             Expanded(
-              child:  ElevatedButton(
+              child: ElevatedButton(
                 onPressed: dispatchRandom,
                 child: const Text('Get random trivia'),
               ),

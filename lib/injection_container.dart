@@ -56,5 +56,5 @@ Future<void> init() async {
   get.registerLazySingleton(() => sharedPreferences);
   get.registerLazySingleton(() => http.Client());
   get.registerLazySingleton(() => JsonParser());
-  get.registerLazySingleton(() => InternetConnectionChecker());
+  get.registerLazySingleton(() => InternetConnectionChecker.createInstance());
 }

@@ -21,7 +21,7 @@ import 'starship_repository_impl_test.mocks.dart';
   StarshipRemoteDataSource,
   StarshipLocalDataSource,
   NetworkInfo,
-  JsonParser
+  JsonParser,
 ])
 void main() {
   late StarshipRepositoryImpl repository;
@@ -42,10 +42,10 @@ void main() {
         networkInfo: mockNetworkInfo);
   });
 
-  final List<Map<String, dynamic>> dynamicList = json.decode(fixture("starships.json"));
+  final List<Map<String, dynamic>> dynamicList =
+      json.decode(fixture("starships.json"));
   final List<StarshipModel> shipModels =
       List<StarshipModel>.from(json.decode(fixture("starships.json")));
-      
 
   void runTestsOnline(Function body) {
     group("device is online", () {
@@ -283,6 +283,9 @@ void main() {
         repository.getListStarship();
         // assert
         verify(mockNetworkInfo.isConnected);
+        verify(
+          resultsResponse,
+        );
       },
     );
 
